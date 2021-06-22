@@ -1,0 +1,731 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{234536B8-6D64-4FBD-A408-9FD2DF7C16FE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WacVisitor</RootNamespace>
+    <AssemblyName>WacVisitor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>visitor.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AForge">
+      <HintPath>..\..\..\SOURCECODE\Aforge.NET-Library\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging">
+      <HintPath>..\..\..\SOURCECODE\Aforge.NET-Library\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="ClassHelper">
+      <HintPath>..\..\..\SOURCECODE\classDlls\ClassHelper\ClassHelper\bin\Debug\ClassHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\..\WACThaiID-WACThaiIDnPassport\WACThaiID\ThaiID\bin\Debug\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="GemSmartCardLib">
+      <HintPath>..\..\..\SMARTCARD_NEW_LIBRARY\GemCardWinSCard\GemSmartCardLib\bin\Debug\GemSmartCardLib.dll</HintPath>
+    </Reference>
+    <Reference Include="iFinTechIDCard">
+      <HintPath>..\..\..\WACThaiID-WACThaiIDnPassport\WACThaiID\ThaiID\bin\Debug\iFinTechIDCard.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Extensions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=69c3241e6f0468ca, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens">
+      <HintPath>..\..\VISITOR_PASS_CLOUD\VISITOR_PASS_CLOUD\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging">
+      <HintPath>..\..\VISITOR_PASS_CLOUD\VISITOR_PASS_CLOUD\bin\Debug\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens">
+      <HintPath>..\..\VISITOR_PASS_CLOUD\VISITOR_PASS_CLOUD\bin\Debug\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>..\..\..\SOURCECODE\Sourcecode CS\ConnectDirectToPostgres\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\..\..\SOURCECODE\Sourcecode CS\ConnectDirectToPostgres\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="pcsc-sharp, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\WACThaiID-WACThaiIDnPassport\WACThaiID\ThaiID\bin\Debug\pcsc-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IdentityModel">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IdentityModel.Tokens.Jwt">
+      <HintPath>..\..\VISITOR_PASS_CLOUD\VISITOR_PASS_CLOUD\bin\Debug\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\S.WITTAYA\Desktop\TestRestAPIClient\TestRestAPIClient\bin\Debug\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>C:\Users\S.WITTAYA\Desktop\TestRestAPIClient\TestRestAPIClient\bin\Debug\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\S.WITTAYA\Desktop\TestRestAPIClient\TestRestAPIClient\bin\Debug\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ThaiNationalIDCard, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ThaiNationalIDCard.dll</HintPath>
+    </Reference>
+    <Reference Include="Zen.Barcode.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b5ae55aa76d2d9de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Zen.Barcode.Rendering.Framework.3.1.10729.1\lib\Zen.Barcode.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChargeParking.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChargeParking.Designer.cs">
+      <DependentUpon>ChargeParking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="classAnimate.cs" />
+    <Compile Include="classCheckLicense.cs" />
+    <Compile Include="classCreateAccessDB.cs" />
+    <Compile Include="ClassData.cs" />
+    <Compile Include="ClassEncryptDecrypt.cs" />
+    <Compile Include="classGlobal.cs" />
+    <Compile Include="ClassTest.cs" />
+    <Compile Include="classWebp.cs" />
+    <Compile Include="classWebservice.cs" />
+    <Compile Include="clsImage.cs" />
+    <Compile Include="clsInfo.cs" />
+    <Compile Include="FormChargeReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormChargeReport.Designer.cs">
+      <DependentUpon>FormChargeReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMoreInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMoreInfo.Designer.cs">
+      <DependentUpon>FormMoreInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\FormActivity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\FormActivity.designer.cs">
+      <DependentUpon>FormActivity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\FormPreviewIN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\FormPreviewIN.Designer.cs">
+      <DependentUpon>FormPreviewIN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\FormPreviewSlip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\FormPreviewSlip.Designer.cs">
+      <DependentUpon>FormPreviewSlip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\FormSearchCategoryInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\FormSearchCategoryInfo.Designer.cs">
+      <DependentUpon>FormSearchCategoryInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\FormSettingEtc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\FormSettingEtc.Designer.cs">
+      <DependentUpon>FormSettingEtc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\SettingBlackList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\SettingBlackList.Designer.cs">
+      <DependentUpon>SettingBlackList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\SettingBusinessTopic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\SettingBusinessTopic.Designer.cs">
+      <DependentUpon>SettingBusinessTopic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\SettingChargeCarPark.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\SettingChargeCarPark.Designer.cs">
+      <DependentUpon>SettingChargeCarPark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\SettingCompany.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\SettingCompany.Designer.cs">
+      <DependentUpon>SettingCompany.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\SettingDepartment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\SettingDepartment.Designer.cs">
+      <DependentUpon>SettingDepartment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\SettingLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\SettingLicense.Designer.cs">
+      <DependentUpon>SettingLicense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\SettingPlace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\SettingPlace.Designer.cs">
+      <DependentUpon>SettingPlace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\SettingVehicleType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\SettingVehicleType.Designer.cs">
+      <DependentUpon>SettingVehicleType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\SettingVisitorType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\SettingVisitorType.Designer.cs">
+      <DependentUpon>SettingVisitorType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetting\SettingVisitTo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetting\SettingVisitTo.Designer.cs">
+      <DependentUpon>SettingVisitTo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormViewVisitorFactory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormViewVisitorFactory.Designer.cs">
+      <DependentUpon>FormViewVisitorFactory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAgeForPub.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAgeForPub.Designer.cs">
+      <DependentUpon>frmAgeForPub.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAppointment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAppointment.Designer.cs">
+      <DependentUpon>frmAppointment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAuthen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAuthen.Designer.cs">
+      <DependentUpon>frmAuthen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAuthenReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAuthenReport.Designer.cs">
+      <DependentUpon>frmAuthenReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAuthenReportPermission.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAuthenReportPermission.Designer.cs">
+      <DependentUpon>frmAuthenReportPermission.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCheckLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCheckLicense.Designer.cs">
+      <DependentUpon>frmCheckLicense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmExit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExit.Designer.cs">
+      <DependentUpon>frmExit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmExport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExport.Designer.cs">
+      <DependentUpon>frmExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmHiden.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmHiden.Designer.cs">
+      <DependentUpon>frmHiden.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLicense.Designer.cs">
+      <DependentUpon>frmLicense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLoading.Designer.cs">
+      <DependentUpon>frmLoading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogOff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogOff.Designer.cs">
+      <DependentUpon>frmLogOff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMessageBox.Designer.cs">
+      <DependentUpon>frmMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMsgWhiteBG.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMsgWhiteBG.Designer.cs">
+      <DependentUpon>frmMsgWhiteBG.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPrintConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPrintConfirm.Designer.cs">
+      <DependentUpon>frmPrintConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSettingType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettingType.Designer.cs">
+      <DependentUpon>frmSettingType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTakePicture.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTakePicture.Designer.cs">
+      <DependentUpon>frmTakePicture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTopMost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTopMost.Designer.cs">
+      <DependentUpon>frmTopMost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVehicle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVehicle.Designer.cs">
+      <DependentUpon>frmVehicle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmView.Designer.cs">
+      <DependentUpon>frmView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmViewGuestDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmViewGuestDetail.Designer.cs">
+      <DependentUpon>frmViewGuestDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmViewVisitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmViewVisitor.Designer.cs">
+      <DependentUpon>frmViewVisitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_visitor_vehicle_type.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_visitor_vehicle_type.Designer.cs">
+      <DependentUpon>frm_visitor_vehicle_type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Msg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Msg.Designer.cs">
+      <DependentUpon>Msg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MsgLongInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MsgLongInfo.Designer.cs">
+      <DependentUpon>MsgLongInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Personal.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="frmHWDevices.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmHWDevices.Designer.cs">
+      <DependentUpon>frmHWDevices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSummaryLogs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSummaryLogs.Designer.cs">
+      <DependentUpon>frmSummaryLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RoundButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RoundButtonHotTrack.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SettingMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingMenu.Designer.cs">
+      <DependentUpon>SettingMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextBoxRound.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ThaiIDReader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThaiIDReader.Designer.cs">
+      <DependentUpon>ThaiIDReader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="uControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="uControl.Designer.cs">
+      <DependentUpon>uControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebcamDevice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WebcamDevice.Designer.cs">
+      <DependentUpon>WebcamDevice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebPWrapper.cs" />
+    <Compile Include="WinSCard.cs" />
+    <EmbeddedResource Include="ChargeParking.resx">
+      <DependentUpon>ChargeParking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormChargeReport.resx">
+      <DependentUpon>FormChargeReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMoreInfo.resx">
+      <DependentUpon>FormMoreInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\FormActivity.resx">
+      <DependentUpon>FormActivity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\FormPreviewIN.resx">
+      <DependentUpon>FormPreviewIN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\FormPreviewSlip.resx">
+      <DependentUpon>FormPreviewSlip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\FormSearchCategoryInfo.resx">
+      <DependentUpon>FormSearchCategoryInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\FormSettingEtc.resx">
+      <DependentUpon>FormSettingEtc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\SettingBlackList.resx">
+      <DependentUpon>SettingBlackList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\SettingBusinessTopic.resx">
+      <DependentUpon>SettingBusinessTopic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\SettingChargeCarPark.resx">
+      <DependentUpon>SettingChargeCarPark.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\SettingCompany.resx">
+      <DependentUpon>SettingCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\SettingDepartment.resx">
+      <DependentUpon>SettingDepartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\SettingLicense.resx">
+      <DependentUpon>SettingLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\SettingPlace.resx">
+      <DependentUpon>SettingPlace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\SettingVehicleType.resx">
+      <DependentUpon>SettingVehicleType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\SettingVisitorType.resx">
+      <DependentUpon>SettingVisitorType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting\SettingVisitTo.resx">
+      <DependentUpon>SettingVisitTo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormViewVisitorFactory.resx">
+      <DependentUpon>FormViewVisitorFactory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAgeForPub.resx">
+      <DependentUpon>frmAgeForPub.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAppointment.resx">
+      <DependentUpon>frmAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAuthen.resx">
+      <DependentUpon>frmAuthen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAuthenReport.resx">
+      <DependentUpon>frmAuthenReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAuthenReportPermission.resx">
+      <DependentUpon>frmAuthenReportPermission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCheckLicense.resx">
+      <DependentUpon>frmCheckLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmExit.resx">
+      <DependentUpon>frmExit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmExport.resx">
+      <DependentUpon>frmExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmHiden.resx">
+      <DependentUpon>frmHiden.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLicense.resx">
+      <DependentUpon>frmLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLoading.resx">
+      <DependentUpon>frmLoading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogOff.resx">
+      <DependentUpon>frmLogOff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMessageBox.resx">
+      <DependentUpon>frmMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMsgWhiteBG.resx">
+      <DependentUpon>frmMsgWhiteBG.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPrintConfirm.resx">
+      <DependentUpon>frmPrintConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSettingType.resx">
+      <DependentUpon>frmSettingType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTakePicture.resx">
+      <DependentUpon>frmTakePicture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTopMost.resx">
+      <DependentUpon>frmTopMost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVehicle.resx">
+      <DependentUpon>frmVehicle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmView.resx">
+      <DependentUpon>frmView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmViewGuestDetail.resx">
+      <DependentUpon>frmViewGuestDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmViewVisitor.resx">
+      <DependentUpon>frmViewVisitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_visitor_vehicle_type.resx">
+      <DependentUpon>frm_visitor_vehicle_type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Msg.resx">
+      <DependentUpon>Msg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MsgLongInfo.resx">
+      <DependentUpon>MsgLongInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="frmHWDevices.resx">
+      <DependentUpon>frmHWDevices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSummaryLogs.resx">
+      <DependentUpon>frmSummaryLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingMenu.resx">
+      <DependentUpon>SettingMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThaiIDReader.resx">
+      <DependentUpon>ThaiIDReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="uControl.resx">
+      <DependentUpon>uControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WebcamDevice.resx">
+      <DependentUpon>WebcamDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\icon\poweroff.png" />
+    <None Include="bin\Debug\visitor.ico" />
+    <None Include="bin\Debug\icon\search.png" />
+    <None Include="bin\Debug\icon\clear.png" />
+    <None Include="bin\Debug\icon\view.png" />
+    <None Include="bin\Debug\icon\cam_on.png" />
+    <None Include="bin\Debug\icon\cam_off.png" />
+    <None Include="bin\Debug\icon\home.png" />
+    <None Include="bin\Debug\icon\webcam.png" />
+    <None Include="bin\Debug\icon\setting.png" />
+    <None Include="bin\Debug\icon\export.png" />
+    <None Include="bin\Debug\icon\exporttext.png" />
+    <None Include="bin\Debug\icon\money.png" />
+    <None Include="bin\Debug\icon\upload.png" />
+    <Content Include="visitor.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
