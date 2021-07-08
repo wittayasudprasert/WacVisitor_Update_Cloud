@@ -314,11 +314,16 @@ namespace WacVisitor
             lbKeyboardLayout.Text = kbLayout.Replace("en-US", "EN").Replace("th-TH", "TH");
 
 
-            panel_group_2.Left = ((this.ClientSize.Width - panel_group_2.Size.Width) / 2) - 50;
-            rbtnOK.Left = (panel_group_1.Left + panel_group_2.Size.Width) + 2;
+            txtVisitorNumber.Left = ((this.ClientSize.Width - txtVisitorNumber.Size.Width) / 2) - 50;
+            lbKeyboardLayout.Left = txtVisitorNumber.Left + (txtVisitorNumber.Size.Width) + 20;
 
-            rbtnReprint.Left = (panel_group_1.Left + panel_group_2.Size.Width) + 2;
+            panel1.Left = panel_group_1.Left;
+
+            panel_group_2.Left = txtVisitorNumber.Left; // ((this.ClientSize.Width - panel_group_2.Size.Width) / 2) - 50;
+
             rbtnReprint.Enabled = false;
+
+            panel2.Left = listBox1.Left;
 
             btnIDCard.BackgroundImage = Image.FromFile(@"icon\idcard.png");
             btnIDCard.BackgroundImageLayout = ImageLayout.Stretch;
@@ -4079,6 +4084,6 @@ namespace WacVisitor
             ));
         }
 
-  
+        
     }
 }
