@@ -96,6 +96,7 @@
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(373, 38);
             this.dateTimePicker2.TabIndex = 18;
+            this.dateTimePicker2.Value = new System.DateTime(2021, 7, 9, 23, 59, 0, 0);
             // 
             // dateTimePicker1
             // 
@@ -107,6 +108,7 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(373, 38);
             this.dateTimePicker1.TabIndex = 17;
+            this.dateTimePicker1.Value = new System.DateTime(2021, 7, 9, 0, 0, 0, 0);
             // 
             // label1
             // 

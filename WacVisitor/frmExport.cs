@@ -39,6 +39,7 @@ namespace WacVisitor
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
         bool boolTerminateJob = false;
+        DataTable dtAudit = new DataTable("dtAudit");
         public frmExport()
         {
             InitializeComponent();
@@ -54,8 +55,12 @@ namespace WacVisitor
             textBox1.Text = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             button2.Enabled = true;
 
-            dateTimePicker1.Value = DateTime.Now.AddHours(-1.0F);
-            dateTimePicker2.Value = DateTime.Now.AddHours(1.0F);
+            string dateTime = "";
+
+            dateTime = DateTime.Now.ToString("yyyy-MM-dd") + " " + "00:00:00";
+            dateTimePicker1.Value = DateTime.Parse(dateTime, System.Globalization.CultureInfo.InvariantCulture);
+            dateTime = DateTime.Now.ToString("yyyy-MM-dd") + " " + "23:59:59";
+            dateTimePicker2.Value = DateTime.Parse(dateTime, System.Globalization.CultureInfo.InvariantCulture);
         }
         private void button10_Click(object sender, EventArgs e)
         {
@@ -111,7 +116,12 @@ namespace WacVisitor
                 string startText = dateTimePicker1.Value.ToString("dd-MM-yyyy_HH_mm_ss");
                 string stopText = dateTimePicker2.Value.ToString("dd-MM-yyyy_HH_mm_ss");
 
-                string outputfilename = textBox1.Text + @"\" + startText + "-to-" + startText + ".xlsx";
+                string outputfilename = textBox1.Text + @"\" + startText + "-to-" + stopText + ".xlsx";
+
+                //++ ส่งออกรายงาน excell สำหรับ audit การเข้าออก รายวัน request ของลูกค้าหนุ่มใน version โรงงาน 07/07/2564
+                if (classGlobal.FactoryVersion == true)
+                    CreateExcelPackageForAudit(dt, textBox1.Text, dateTimePicker1.Value.ToString("yyyy-MM-dd"), dateTimePicker2.Value.ToString("yyyy-MM-dd"));
+                //-- ส่งออกรายงาน excell สำหรับ audit การเข้าออก รายวัน request ของลูกค้าหนุ่มใน version โรงงาน 07/07/2564
 
                 if (classGlobal.FactoryVersion == true)
                     CreateExcelPackage_Factory(dt, outputfilename);
@@ -125,7 +135,7 @@ namespace WacVisitor
                 f.strStatus = "Warning";
                 f.ShowDialog();
             }
-
+            
         }
         private DataTable QUERY_EXPORT()
         {
@@ -1071,6 +1081,210 @@ namespace WacVisitor
 
         }
         //--- Export 
+
+        private void CreateExcelPackageForAudit(DataTable dt, string output, string start, string stop)
+        {
+
+            DateTime dtStart = DateTime.ParseExact(start, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            DateTime dtStop = DateTime.ParseExact(stop, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            TimeSpan diffResult = dtStop.Subtract(dtStart);
+
+            dtStart = dtStart.AddDays(-1);
+            for (int d = 1; d <= diffResult.TotalDays + 2; d++)  // main loop วันที่
+            {
+                
+                dtStart = dtStart.AddDays(1);
+                //++ check if equal date 
+                string loopDateString = dtStart.Day.ToString().PadLeft(2,'0') + "/" + dtStart.Month.ToString().PadLeft(2, '0') + "/" + (int.Parse(dtStart.Year.ToString()) + 543).ToString();
+                DataRow[] foundDateFocus= dt.Select("status_in LIKE '" + loopDateString + "%'");
+                if (foundDateFocus.Count() == 0)
+                    goto JUMP_LOOP;
+                //-- check if equal date 
+
+                string fileName = dtStart.Day.ToString().PadLeft(2, '0') + "_" + dtStart.Month.ToString().PadLeft(2, '0') + "_" + dtStart.Year.ToString();
+                fileName = output + @"\" + fileName + ".xlsx";
+                string captionText = "สรุปยอดรถ เข้า-ออกประเภทต่างๆ.. วันที่" + " " + dtStart.Day.ToString() + " " + classGlobal.monthTextLong[dtStart.Month] + " " + (dtStart.Year + 543).ToString();
+                using (var package = new ExcelPackage())
+                {
+                    var workbook = package.Workbook;
+                    var worksheet = workbook.Worksheets.Add("Sheet1");
+
+                    worksheet.Cells[1, 1].Value = captionText;
+                    worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                    worksheet.Cells[1, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                    for (int r = 1; r <= 1; r++)
+                    {
+                        for (int c = 2; c <= 6; c++)
+                        {
+                            worksheet.Cells[r, c].Value = " ";
+                            worksheet.Cells[r, c].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells[r, c].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        }
+                    }
+                    worksheet.Cells["A1:F1"].Merge = true;  // Merge first row  สรุปยอดรถ เข้า-ออกประเภทต่างๆ..
+                    var drVisitorTypeGroup = (from Rows in dt.AsEnumerable() select Rows["typename"]).Distinct().ToList();
+
+                    int currentRow = 0;
+                    DataTable dtClone = foundDateFocus.CopyToDataTable();
+                    drVisitorTypeGroup = (from Rows in dtClone.AsEnumerable() select Rows["typename"]).Distinct().ToList();
+                    currentRow = currentRow;
+
+                    foreach (var typeName in drVisitorTypeGroup)
+                    {
+                        currentRow = worksheet.Dimension.End.Row + 1;
+                        worksheet.Cells[currentRow, 1].Value = "ประเภท VISITOR - " + typeName;
+                        worksheet.Cells[currentRow, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                        worksheet.Cells[currentRow, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        worksheet.Cells[currentRow, 1].Style.Font.Bold = true;
+                        worksheet.Cells[currentRow, 1].Style.Font.UnderLine = true;
+
+                        for (int r = currentRow; r <= currentRow; r++)
+                        {
+                            for (int c = 2; c <= 6; c++)
+                            {
+                                worksheet.Cells[r, c].Value = " ";
+                                worksheet.Cells[r, c].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                worksheet.Cells[r, c].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                            }
+                        }
+                        worksheet.Cells["A" + currentRow + ":" + "F" + currentRow].Merge = true;  // Merge row แต่ละประเภท
+
+                        //--------------------------------------------------------------------//
+
+                        currentRow = worksheet.Dimension.End.Row + 1;//// บรรทัดใหม่ (บริษัท เลขปรพจำตัว....)
+                        worksheet.Cells[currentRow, 1].Value = "บริษัท";
+                        worksheet.Cells[currentRow, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells[currentRow, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        worksheet.Column(1).Width = 40;
+
+                        worksheet.Cells[currentRow, 2].Value = "เลขประจำตัว";
+                        worksheet.Cells[currentRow, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells[currentRow, 2].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        worksheet.Column(2).Width = 20;
+
+                        worksheet.Cells[currentRow, 3].Value = "ชื่อ-สกุล";
+                        worksheet.Cells[currentRow, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells[currentRow, 3].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        worksheet.Column(3).Width = 20;
+
+                        worksheet.Cells[currentRow, 4].Value = "เวลาเข้า";
+                        worksheet.Cells[currentRow, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells[currentRow, 4].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        worksheet.Column(4).Width = 20;
+
+                        worksheet.Cells[currentRow, 5].Value = "เวลาออก";
+                        worksheet.Cells[currentRow, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells[currentRow, 5].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        worksheet.Column(5).Width = 20;
+
+                        worksheet.Cells[currentRow, 6].Value = "จำนวนคน";
+                        worksheet.Cells[currentRow, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells[currentRow, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        worksheet.Column(6).Width = 15;
+
+                        //--------------------------------------------------------------------//   
+                        //DataRow[] dr = dt.Select("typename='" + typeName + "'");
+                        DataRow[] dr = dtClone.Select("typename='" + typeName + "'" + " AND " + "status_in LIKE '" + loopDateString + "%'");
+                        if (dr.Count() > 0)
+                        {
+                            string company = "";
+                            string citizenId = "";
+                            string fullName = "";
+                            string In = "";
+                            string Out = "";
+                            string personCount = "";
+                            int numPerson = 0;
+                            for (int r = 0; r < dr.Count(); r++)
+                            {
+                                company = dr[r][21].ToString();
+                                citizenId = dr[r][16].ToString();
+                                fullName = dr[r][17].ToString();
+                                In = dr[r][6].ToString();
+                                Out = dr[r][7].ToString();
+                                personCount = dr[r][20].ToString();
+                                if (personCount == "")
+                                    personCount = "1";
+                                else
+                                    personCount = (int.Parse(personCount) + 1).ToString();
+
+                                numPerson = numPerson + int.Parse(personCount);
+
+
+                                currentRow = worksheet.Dimension.End.Row + 1;
+                                worksheet.Cells[currentRow, 1].Value = company;
+                                worksheet.Cells[currentRow, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                                worksheet.Cells[currentRow, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                                worksheet.Column(1).Width = 40;
+
+                                worksheet.Cells[currentRow, 2].Value = citizenId;
+                                worksheet.Cells[currentRow, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                                worksheet.Cells[currentRow, 2].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                                worksheet.Column(2).Width = 20;
+
+                                worksheet.Cells[currentRow, 3].Value = fullName;
+                                worksheet.Cells[currentRow, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                                worksheet.Cells[currentRow, 3].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                                worksheet.Column(3).Width = 20;
+
+                                worksheet.Cells[currentRow, 4].Value = In;
+                                worksheet.Cells[currentRow, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                                worksheet.Cells[currentRow, 4].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                                worksheet.Column(4).Width = 20;
+
+                                worksheet.Cells[currentRow, 5].Value = Out;
+                                worksheet.Cells[currentRow, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                                worksheet.Cells[currentRow, 5].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                                worksheet.Column(5).Width = 20;
+
+                                worksheet.Cells[currentRow, 6].Value = personCount;
+                                worksheet.Cells[currentRow, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                worksheet.Cells[currentRow, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                                worksheet.Column(6).Width = 15;
+
+                            }
+                            currentRow = worksheet.Dimension.End.Row + 1;
+                            worksheet.Cells[currentRow, 1].Value = dr.Count().ToString();
+                            worksheet.Cells[currentRow, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells[currentRow, 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                            worksheet.Column(1).Width = 40;
+
+                            worksheet.Cells[currentRow, 2].Value = " ";
+                            worksheet.Cells[currentRow, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                            worksheet.Cells[currentRow, 2].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                            worksheet.Column(2).Width = 20;
+
+                            worksheet.Cells[currentRow, 3].Value = " ";
+                            worksheet.Cells[currentRow, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                            worksheet.Cells[currentRow, 3].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                            worksheet.Column(3).Width = 20;
+
+                            worksheet.Cells[currentRow, 4].Value = " ";
+                            worksheet.Cells[currentRow, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                            worksheet.Cells[currentRow, 4].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                            worksheet.Column(4).Width = 20;
+
+                            worksheet.Cells[currentRow, 5].Value = " ";
+                            worksheet.Cells[currentRow, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                            worksheet.Cells[currentRow, 5].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                            worksheet.Column(5).Width = 20;
+
+                            worksheet.Cells[currentRow, 6].Value = numPerson.ToString();
+                            worksheet.Cells[currentRow, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells[currentRow, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                            worksheet.Column(6).Width = 15;
+                        }
+                    }
+
+                    package.SaveAs(new FileInfo(fileName));
+                }
+
+            JUMP_LOOP:
+                Console.Write("JUMP_LOOP");
+                System.Threading.Thread.Sleep(10);
+            }
+
+        }
     }
 }
 
