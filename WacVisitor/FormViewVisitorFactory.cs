@@ -315,7 +315,7 @@ namespace WacVisitor
                 using (var ms = new System.IO.MemoryStream(imageBytes, 0, imageBytes.Length))
                 {
                     Image image = Image.FromStream(ms, true);
-                    //image.Save(@"Webcam\temp.png");
+                    //image.Save(@"webcam\temp.png");
                     return image;
                 }
             }

@@ -537,7 +537,7 @@ namespace WacVisitor
                             }
                             
                             //bmp = new Bitmap(@"Webcam\temp.png");
-                            byte1 = System.IO.File.ReadAllBytes(@"Webcam\temp.png");
+                            byte1 = System.IO.File.ReadAllBytes(@"webcam\temp.png");
                             ic = new ImageConverter();
                             bmp = (Image)ic.ConvertFrom(byte1);
                         }
@@ -564,7 +564,7 @@ namespace WacVisitor
                         //picture1.SetSize(160, 100);  // picture width * hegiht
                         bmp.Dispose();
                         bmp = null;
-                        System.IO.File.Delete(@"Webcam\temp.png");
+                        System.IO.File.Delete(@"webcam\temp.png");
                         picture1.Dispose();
                         picture1 = null;
                         //--
@@ -586,7 +586,7 @@ namespace WacVisitor
                             }
                             
                             //bmp = new Bitmap(@"Webcam\temp.png");
-                            byte1 = System.IO.File.ReadAllBytes(@"Webcam\temp.png");
+                            byte1 = System.IO.File.ReadAllBytes(@"webcam\temp.png");
                             ic = new ImageConverter();
                             bmp = (Image)ic.ConvertFrom(byte1);
                         }
@@ -613,7 +613,7 @@ namespace WacVisitor
                         //picture2.SetSize(160, 100);  // picture width * hegiht
                         bmp.Dispose();
                         bmp = null;
-                        System.IO.File.Delete(@"Webcam\temp.png");
+                        System.IO.File.Delete(@"webcam\temp.png");
                         picture2.Dispose();
                         picture2 = null;
                         //--
@@ -839,7 +839,7 @@ namespace WacVisitor
                                 Base64ToImage(ClassData.DOWNLOAD_IMAGE(dr["str_imagedocument"].ToString(), 130, 60));
                             }                            
                             //bmp = new Bitmap(@"Webcam\temp.png");
-                            byte1 = System.IO.File.ReadAllBytes(@"Webcam\temp.png");
+                            byte1 = System.IO.File.ReadAllBytes(@"webcam\temp.png");
                             ic = new ImageConverter();
                             bmp = (Image)ic.ConvertFrom(byte1);
                         }
@@ -866,7 +866,7 @@ namespace WacVisitor
                         //picture1.SetSize(160, 100);  // picture width * hegiht
                         bmp.Dispose();
                         bmp = null;
-                        System.IO.File.Delete(@"Webcam\temp.png");
+                        System.IO.File.Delete(@"webcam\temp.png");
                         picID.Dispose();
                         picID = null;
                         //--
@@ -885,11 +885,18 @@ namespace WacVisitor
                             else
                             {
                                 Base64ToImage(ClassData.DOWNLOAD_IMAGE(dr["str_imagewebcamera"].ToString(), 130, 60));
-                            }                            
-                            //bmp = new Bitmap(@"Webcam\temp.png");
-                            byte1 = System.IO.File.ReadAllBytes(@"Webcam\temp.png");
-                            ic = new ImageConverter();
-                            bmp = (Image)ic.ConvertFrom(byte1);
+                            }
+                            //bmp = new Bitmap(@"Wwebcam\temp.png");
+                            try
+                            {
+                                byte1 = System.IO.File.ReadAllBytes(@"webcam\temp.png");
+                                ic = new ImageConverter();
+                                bmp = (Image)ic.ConvertFrom(byte1);
+                            }
+                            catch
+                            {
+                                bmp = Image.FromFile(@"icon\unknown.png");
+                            }                
                         }
                         System.Threading.Thread.Sleep(10);
 
@@ -913,7 +920,7 @@ namespace WacVisitor
                         }
                         bmp.Dispose();
                         bmp = null;
-                        System.IO.File.Delete(@"Webcam\temp.png");
+                        System.IO.File.Delete(@"webcam\temp.png");
                         picCam1.Dispose();
                         picCam1 = null;
                         //--
@@ -934,7 +941,7 @@ namespace WacVisitor
                                 Base64ToImage(ClassData.DOWNLOAD_IMAGE(dr["str_imagewebcamera1"].ToString(), 130, 60));
                             }                              
                             //bmp = new Bitmap(@"Webcam\temp.png");
-                            byte1 = System.IO.File.ReadAllBytes(@"Webcam\temp.png");
+                            byte1 = System.IO.File.ReadAllBytes(@"webcam\temp.png");
                             ic = new ImageConverter();
                             bmp = (Image)ic.ConvertFrom(byte1);
                         }
@@ -960,7 +967,7 @@ namespace WacVisitor
                         }
                         bmp.Dispose();
                         bmp = null;
-                        System.IO.File.Delete(@"Webcam\temp.png");
+                        System.IO.File.Delete(@"webcam\temp.png");
                         picCam2.Dispose();
                         picCam2 = null;
                         //--
@@ -981,7 +988,7 @@ namespace WacVisitor
                                 Base64ToImage(ClassData.DOWNLOAD_IMAGE(dr["str_imagewebcamera2"].ToString(), 130, 60));
                             }  
                             //bmp = new Bitmap(@"Webcam\temp.png");
-                            byte1 = System.IO.File.ReadAllBytes(@"Webcam\temp.png");
+                            byte1 = System.IO.File.ReadAllBytes(@"webcam\temp.png");
                             ic = new ImageConverter();
                             bmp = (Image)ic.ConvertFrom(byte1);
                         }
@@ -1007,7 +1014,7 @@ namespace WacVisitor
                         }
                         bmp.Dispose();
                         bmp = null;
-                        System.IO.File.Delete(@"Webcam\temp.png");
+                        System.IO.File.Delete(@"webcam\temp.png");
                         picCam3.Dispose();
                         picCam3 = null;
                         //--
@@ -1071,7 +1078,7 @@ namespace WacVisitor
                 using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
                 {
                     Image image = Image.FromStream(ms, true);
-                    image.Save(@"Webcam\temp.png");
+                    image.Save(@"webcam\temp.png");
                 }
             }
             catch
